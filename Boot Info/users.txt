@@ -1,0 +1,72 @@
+;This file must be called "users.txt" and live in a directory called "Boot Info" which
+;can be found in the same directory the the "Kernel Booter" directory is in:
+;
+;	/myHD
+;	  /Prometheus
+;	    /Kernel Booter
+;	    /Boot Info
+;	        users.txt
+;
+;User info file.  A line starting with ; is a comment line.  Comments must
+;start at the beginning of the line.  User info is stored like this:
+;
+;username
+;password
+;<property1> <tab> <value1> <tab> <value2> ...
+;<property2> <tab> <value1> <tab> <value2> ...
+;
+;Properties can be any string (by convention they should be all lowercase)
+;that can be looked up for this particular user.  The (optional) values are seperated
+;from the property by a single tab.  All lines must terminate with a newline
+;immediately after the data on that line.  Different users are seperated by
+;one or more newlines.  The file is terminated with any line starting with "-".
+;Any information or text past that line is ignored.
+;
+;Eventually the password line for every user will be encrypted.  EVENTUALLY this
+;entire file will be encrypted.  But for now it will suffice.
+;
+;The following is a list of valid properties.  New ones should be added to
+;the list as they are created.  Any other properties will be ignored by the kernel.
+;
+;<kernel-directory>	<boot-directory>|<select>
+;		This optional property allows the user to configure which kernel directory
+;		to continue the boot process from after login.
+;		<boot-directory> means the kernel tries to use the directory it booted from.  This
+;			is the default setting for the boot process.
+;		<select> means that the kernel asks the user to select after login.
+;
+;<operating-systems>	<os1>	<os2>	<os3>
+;		This optional property allows the user to configure which operating systems
+;		the kernel should load after login.  Any operating systems in the list but not
+;		present in the "Operating Systems" subdirectory are ignored.  An empty list indicates
+;		that no operating systems should be loaded.  The absence of this identifier
+;		indicates that all operating systems should be loaded.
+;
+;Any other properties which are specific to a certain operating system should be
+;prefixed by a key for that operating system:
+;
+;		OS_Stupid OS	-	os_stupidos_
+;		Moira	-	moira_
+
+;Typical root user.
+root
+root
+
+;User tgree.  I like to select my own kernel directory, and only boot OS_Stupid OS
+tgree
+LogMeIn
+kernel-directory	select
+operating-systems	OS_Stupid OS
+os_stupidos_prompt	scooby-doo
+
+;User patrick.
+patrick
+bubba312
+operating-systems	OS_Stupid OS
+os_stupidos_prompt	YourOrders
+
+;Just for testing the kernel - doesn't boot an operating system
+kernel
+kernel
+operating-systems
+-
